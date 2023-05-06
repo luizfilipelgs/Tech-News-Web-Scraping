@@ -1,6 +1,20 @@
+import requests
+
+
 # Requisito 1
-def fetch(url):
-    """Seu código deve vir aqui"""
+def fetch(url: str, wait: int = 3) -> str:
+    header = {"user-agent": "Fake user-agent"}
+    try:
+        response = requests.get(url, headers=header, timeout=wait)
+        response.raise_for_status()
+        return response.text
+    except (requests.HTTPError, requests.ReadTimeout):
+        return None
+
+
+""" url = 'https://g1.globo.com/economia/'
+print(fetch(url))
+ """
 
 
 # Requisito 2
