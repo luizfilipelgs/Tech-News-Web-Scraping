@@ -5,7 +5,8 @@ mock_data = [
         "timestamp": "01-05-2023",
         "writer": "luiz",
         "reading_time": 5,
-        "summary": "a UFF agega em seu time o dev luiz filipe como front-end para projetos com IA para petrobras",
+        "summary": "a UFF agrega em seu time o dev Luiz Filipe como \
+          front-end para projetos com IA para Petrobras",
         "category": "Tech"
     },
     {
@@ -23,7 +24,8 @@ mock_data = [
         "timestamp": "03-05-2023",
         "writer": "Luiz Filipe",
         "reading_time": 15,
-        "summary": "Empresa parceira reprova metade dos alunos da escola, em uma etapa que nem eliminatoria era, que parceria é essa ?",
+        "summary": "Empresa parceira reprova metade dos alunos da escola, em \
+          uma etapa que nem eliminatoria era, que parceria é essa ?",
         "category": "Tech"
     }
 ]
