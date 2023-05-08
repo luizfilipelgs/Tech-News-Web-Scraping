@@ -1,4 +1,5 @@
 from tech_news.database import search_news
+from datetime import datetime
 
 
 def search_by_title(title):
@@ -8,9 +9,18 @@ def search_by_title(title):
 
 # Requisito 8
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    try:
+        date_obj = datetime.strptime(date, "%Y-%m-%d")
+        formatted_date = date_obj.strftime("%d/%m/%Y")
+        query = {"timestamp": formatted_date}
+        matching_dates = search_news(query)
+        return [(news["title"], news["url"]) for news in matching_dates]
+
+    except ValueError:
+        raise ValueError("Data inválida")
 
 
 # Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    query = {"category": {"$regex": category, "$options": "i"}}
+    return [(news['title'], news['url']) for news in search_news(query)]
