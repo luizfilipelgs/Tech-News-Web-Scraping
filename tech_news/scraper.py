@@ -1,8 +1,11 @@
+from parsel import Selector
 import requests
+import time
 
 
 # Requisito 1
 def fetch(url: str, wait: int = 3) -> str:
+    time.sleep(1)
     header = {"user-agent": "Fake user-agent"}
     try:
         response = requests.get(url, headers=header, timeout=wait)
@@ -12,14 +15,20 @@ def fetch(url: str, wait: int = 3) -> str:
         return None
 
 
-""" url = 'https://g1.globo.com/economia/'
-print(fetch(url))
- """
+"""
+url = 'https://blog.betrybe.com/'
+res_fetch = fetch(url) """
 
 
 # Requisito 2
-def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+def scrape_updates(html_content: str) -> list[str]:
+    selector = Selector(html_content)
+    listUrl = selector.css('.cs-overlay-link::attr(href)').getall()
+    return listUrl
+
+
+""" res_scrap = scrape_updates(res_fetch)
+print(res_scrap) """
 
 
 # Requisito 3
