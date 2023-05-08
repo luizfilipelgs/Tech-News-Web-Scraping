@@ -1,10 +1,10 @@
+from tech_news.database import create_news
 from parsel import Selector
 import requests
 import time
 import re
 
 
-# Requisito 1
 def fetch(url: str, wait: int = 3) -> str:
     time.sleep(1)
     header = {"user-agent": "Fake user-agent"}
@@ -16,23 +16,12 @@ def fetch(url: str, wait: int = 3) -> str:
         return None
 
 
-"""
-url = 'https://blog.betrybe.com/'
-res_fetch = fetch(url) """
-
-
-# Requisito 2
 def scrape_updates(html_content: str) -> list[str]:
     selector = Selector(html_content)
     listUrl = selector.css('.cs-overlay-link::attr(href)').getall()
     return listUrl
 
 
-""" res_scrap = scrape_updates(res_fetch)
-print(res_scrap) """
-
-
-# Requisito 3
 def scrape_next_page_link(html_content: str) -> str:
     selector = Selector(html_content)
     url_next_pag = selector.css('a.next.page-numbers::attr(href)').get()
@@ -41,7 +30,6 @@ def scrape_next_page_link(html_content: str) -> str:
     return None
 
 
-# Requisito 4
 def scrape_news(html_content: str) -> dict:
     new = {}
     selector = Selector(html_content)
@@ -58,6 +46,21 @@ def scrape_news(html_content: str) -> dict:
     return new
 
 
-# Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    html_page = fetch("https://blog.betrybe.com/")
+    urls = scrape_updates(html_page)
+    news_list = []
+
+    while len(urls) < amount:
+        next_page = scrape_next_page_link(html_page)
+        html_page = fetch(next_page)
+        news_urls = scrape_updates(html_page)
+        for new_url in news_urls:
+            urls.append(new_url)
+
+    for url in urls[:amount]:
+        news_list.append(scrape_news(fetch(url)))
+
+    create_news(news_list)
+
+    return news_list
