@@ -1,6 +1,7 @@
 from parsel import Selector
 import requests
 import time
+import re
 
 
 # Requisito 1
@@ -32,13 +33,17 @@ print(res_scrap) """
 
 
 # Requisito 3
-def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+def scrape_next_page_link(html_content: str) -> str:
+    selector = Selector(html_content)
+    url_next_pag = selector.css('a.next.page-numbers::attr(href)').get()
+    if url_next_pag and re.match('^https?://', url_next_pag):
+        return url_next_pag
+    return None
 
 
 # Requisito 4
-def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+def scrape_news(html_content: str) -> dict:
+    ...
 
 
 # Requisito 5
