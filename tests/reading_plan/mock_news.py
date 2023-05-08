@@ -16,7 +16,7 @@ mock_data = [
         "reading_time": 10,
         "summary": "A experança retorna no meio dev entre os junior",
         "category": "Tech"
-    }
+    },
     {
         "url": "https://blog.com/3",
         "title": "Empresas parceiras, são realmente parceiras ?",
