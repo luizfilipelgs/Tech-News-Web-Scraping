@@ -43,7 +43,19 @@ def scrape_next_page_link(html_content: str) -> str:
 
 # Requisito 4
 def scrape_news(html_content: str) -> dict:
-    ...
+    new = {}
+    selector = Selector(html_content)
+    new['url'] = selector.css("link[rel='canonical']::attr(href)").get()
+    new['title'] = selector.css('h1.entry-title::text').get().strip()
+    new['timestamp'] = selector.css('li.meta-date::text').get().strip()
+    new['writer'] = selector.css('a.url.fn.n::text').get()
+    new['reading_time'] = int(selector.css('li.meta-reading-time::text').
+                              re_first(r'\d+'))
+    new['summary'] = "".join(
+        selector.css(".entry-content > p:nth-of-type(1) *::text").
+        getall()).strip()
+    new['category'] = selector.css('span.label::text').get()
+    return new
 
 
 # Requisito 5
